@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<vector<vector<string>>> dp(n+1, vector<vector<string>>(n+1, vector<string>()));
+        for(int i = 1; i<=n; i++){
+            dp[i][0].push_back(string(i,'('));
+            for(int j = 1; j<=i; j++){
+                for(int k = 0; k < dp[i][j-1].size();k++)
+                    dp[i][j].push_back(dp[i][j-1][k]+")");
+                for(int k = 0; k < dp[i-1][j].size();k++)
+                    dp[i][j].push_back(dp[i-1][j][k]+"(");
+            }
+        }
+        return dp[n][n];
+    }
+};
